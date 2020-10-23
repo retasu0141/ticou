@@ -1,2 +1,2 @@
 selenium
-chromedriver-binary==76.0.3809.132
+chromedriver-binary==76.0.3809.126.0
