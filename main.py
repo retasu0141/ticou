@@ -8,8 +8,9 @@ from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import chromedriver_binary
+#import chromedriver_binary
 import time
+from selenium.webdriver.chrome.options import Options
 
 import smtplib
 from email.mime.text import MIMEText
@@ -58,7 +59,8 @@ def check():
     options.add_argument('--proxy-server="direct://"');
     options.add_argument('--proxy-bypass-list=*');
     options.add_argument('--start-maximized');
-    driver = webdriver.Chrome(executable_path='/app/.apt/usr/bin/google-chrome',options=options)
+    #driver = webdriver.Chrome(executable_path='/app/.apt/usr/bin/google-chrome',options=options)
+    driver = webdriver.Chrome(options=options)
     url = 'https://webrsv01.dia-koukyou.jp/sayama/web/'
     driver.get(url)
     driver.find_element_by_xpath("//*[@alt='施設の空き状況']").click()
