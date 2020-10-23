@@ -1,4 +1,5 @@
 from selenium import webdriver
+
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
@@ -49,6 +50,8 @@ def sendMail_(text):
 
 
 def check():
+    profile = webdriver.FirefoxProfile()
+    '''
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu');
@@ -56,7 +59,9 @@ def check():
     options.add_argument('--proxy-server="direct://"');
     options.add_argument('--proxy-bypass-list=*');
     options.add_argument('--start-maximized');
-    driver = webdriver.Chrome(options=options)
+    '''
+    driver= webdriver.Firefox(profile)
+    #driver = webdriver.Chrome(options=options)
     url = 'https://webrsv01.dia-koukyou.jp/sayama/web/'
     driver.get(url)
     driver.find_element_by_xpath("//*[@alt='施設の空き状況']").click()
