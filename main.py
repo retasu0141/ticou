@@ -7,7 +7,7 @@ from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-import chromedriver_binary
+#import chromedriver_binary
 import time
 
 import smtplib
@@ -49,6 +49,7 @@ def sendMail_(text):
 
 
 def check():
+    DRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu');
@@ -56,7 +57,7 @@ def check():
     options.add_argument('--proxy-server="direct://"');
     options.add_argument('--proxy-bypass-list=*');
     options.add_argument('--start-maximized');
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(executable_path=DRIVER_PATH,chrome_options=options)
     url = 'https://webrsv01.dia-koukyou.jp/sayama/web/'
     driver.get(url)
     driver.find_element_by_xpath("//*[@alt='施設の空き状況']").click()
