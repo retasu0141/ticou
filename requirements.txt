@@ -1,2 +1,7 @@
 selenium
 chromedriver-binary==76.0.3809.126.0
+psycopg2
+Flask==1.1.1
+hamlish_jinja
+werkzeug==0.16.1
+flask-sqlalchemy
