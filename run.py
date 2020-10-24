@@ -14,6 +14,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.utils import formatdate
 import ssl
+import os
 
 
 # Seleniumをあらゆる環境で起動させるChromeオプション
