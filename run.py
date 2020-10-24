@@ -14,11 +14,14 @@ import smtplib
 from email.mime.text import MIMEText
 from email.utils import formatdate
 import ssl
-import os
 
+import psycopg2
 
 # Seleniumをあらゆる環境で起動させるChromeオプション
 
+def get_connection():
+    dsn = os.environ.get('DATABASE_URL')
+    return psycopg2.connect(dsn)
 
 
 def sendMail(day,mail):
@@ -114,7 +117,7 @@ def check():
                     sendMail_(d.text)
                     seve(d.text,alt)
             else:
-                seve(d.text.alt)
+                seve(d.text,alt)
             #text_list.append(d.text+alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
@@ -128,7 +131,7 @@ def check():
                     sendMail_(d.text)
                     seve(d.text,alt)
             else:
-                seve(d.text.alt)
+                seve(d.text,alt)
     driver.quit()
 
 if __name__ == "__main__":
