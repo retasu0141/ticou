@@ -13,9 +13,9 @@ import time
 import smtplib
 from email.mime.text import MIMEText
 from email.utils import formatdate
-import ssl
+import ssl,os
 
-import psycopg2,os
+import psycopg2
 
 # Seleniumをあらゆる環境で起動させるChromeオプション
 
@@ -41,7 +41,7 @@ def sendMail(day,mail):
     server.close()
 
 def sendMail_(day):
-    mail_list = ['natsukaze2525@gmail.com']
+    mail_list = ['natsukaze2525@gmail.com','namiwa@softbank.ne.jp','hiroaki.nagase@g.softbank.co.jp']
     for m in mail_list:
         sendMail(day,m)
 # options.add_argument('--headless'); # ※ヘッドレスモードを使用する場合、コメントアウトを外す
