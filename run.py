@@ -41,7 +41,7 @@ def sendMail(day,mail):
     server.close()
 
 def sendMail_(day):
-    mail_list = ['natsukaze2525@gmail.com','namiwa@softbank.ne.jp','hiroaki.nagase@g.softbank.co.jp']
+    mail_list = ['natsukaze2525@gmail.com','namiwa723@i.softbank.jp','hiroaki.nagase@g.softbank.co.jp']
     for m in mail_list:
         sendMail(day,m)
 # options.add_argument('--headless'); # ※ヘッドレスモードを使用する場合、コメントアウトを外す
