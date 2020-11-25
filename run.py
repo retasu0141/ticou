@@ -1,3 +1,4 @@
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
@@ -17,13 +18,30 @@ import ssl,os
 
 import psycopg2
 
+class SlackDriver:
+
+    def __init__(self, _token):
+        self._token = _token  # api_token
+        self._headers = {'Content-Type': 'application/json'}
+
+    def send_message(self, message, channel):
+        params = {"token": self._token, "channel": channel, "text": message}
+
+        r = requests.post('https://slack.com/api/chat.postMessage',
+                          headers=self._headers,
+                          params=params)
+        print("return ", r.json())
+
+
+
+
 # Seleniumをあらゆる環境で起動させるChromeオプション
 
 def get_connection():
     dsn = os.environ.get('DATABASE_URL')
     return psycopg2.connect(dsn)
 
-
+'''
 def sendMail(day,mail):
     account = "retasubot.sendonly@gmail.com"
     password = "djtralajkkyuzgpa"
@@ -38,12 +56,15 @@ def sendMail(day,mail):
     server.starttls()
     server.login(account, password)
     server.sendmail(account, mail, msg.as_string())
-    server.close()
+    server.close()'''
 
 def sendMail_(day):
-    mail_list = ['natsukaze2525@gmail.com','namiwa723@i.softbank.jp','hiroaki.nagase@g.softbank.co.jp']
-    for m in mail_list:
-        sendMail(day,m)
+    token = "xoxb-1520045993846-1512072407575-3BZJCWoSxoZHBuvjWWCwM3nZ"
+    slack = SlackDriver(token)
+    slack.send_message(day+'の予約に空きができました！'+'\n\nhttps://webrsv01.dia-koukyou.jp/sayama/web/ から予約できます', "#空き通知")
+#    mail_list = ['natsukaze2525@gmail.com','namiwa@softbank.ne.jp','hiroaki.nagase@g.softbank.co.jp']
+#    for m in mail_list:
+#        sendMail(day,m)
 # options.add_argument('--headless'); # ※ヘッドレスモードを使用する場合、コメントアウトを外す
 
 #DRIVER_PATH = '/chromedriver'
@@ -119,6 +140,45 @@ def check():
             else:
                 seve(d.text,alt)
             #text_list.append(d.text+alt)
+    driver.find_element_by_xpath("//*[@alt='次の月']").click()
+    class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
+    for c in class_:
+        day = c.find_elements_by_tag_name('strong')
+        for d in day:
+            alt = c.find_element_by_tag_name("img").get_attribute("alt")
+            if '空き' in alt:
+                text_ = dbcheck(d.text,alt)
+                if alt != text_:
+                    sendMail_(d.text)
+                    seve(d.text,alt)
+            else:
+                seve(d.text,alt)
+    driver.find_element_by_xpath("//*[@alt='次の月']").click()
+    class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
+    for c in class_:
+        day = c.find_elements_by_tag_name('strong')
+        for d in day:
+            alt = c.find_element_by_tag_name("img").get_attribute("alt")
+            if '空き' in alt:
+                text_ = dbcheck(d.text,alt)
+                if alt != text_:
+                    sendMail_(d.text)
+                    seve(d.text,alt)
+            else:
+                seve(d.text,alt)
+    driver.find_element_by_xpath("//*[@alt='次の月']").click()
+    class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
+    for c in class_:
+        day = c.find_elements_by_tag_name('strong')
+        for d in day:
+            alt = c.find_element_by_tag_name("img").get_attribute("alt")
+            if '空き' in alt:
+                text_ = dbcheck(d.text,alt)
+                if alt != text_:
+                    sendMail_(d.text)
+                    seve(d.text,alt)
+            else:
+                seve(d.text,alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
