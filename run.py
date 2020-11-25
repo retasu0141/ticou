@@ -1,4 +1,4 @@
-import requests
+import requests,os
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
@@ -60,7 +60,7 @@ def sendMail(day,mail):
     server.close()'''
 
 def sendMail_(day):
-    token = "xoxb-1520045993846-1512072407575-YAQrJkwesQIKvZzluhuosZKg"
+    token = os.environ["token"]
     slack = SlackDriver(token)
     slack.send_message(day+'の予約に空きができました！'+'\n\nhttps://webrsv01.dia-koukyou.jp/sayama/web/ から予約できます', "#空き通知")
 #    mail_list = ['natsukaze2525@gmail.com','namiwa@softbank.ne.jp','hiroaki.nagase@g.softbank.co.jp']
