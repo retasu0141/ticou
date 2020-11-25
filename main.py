@@ -15,6 +15,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.utils import formatdate
 import ssl
+from datetime import datetime, date, timedelta
+from dateutil.relativedelta import relativedelta
+
 
 
 # Seleniumをあらゆる環境で起動させるChromeオプション
@@ -50,7 +53,7 @@ def sendMail(text,mail):
     server.close()'''
 
 def sendMail_(text):
-    token = os.environ["token"]
+    token = "xoxb-1520045993846-1512072407575-jYOm7VBluNq1nWimCv9IraG5"
     slack = SlackDriver(token)
     slack.send_message('ただ今の予約状況は以下の通りです\n'+text+'\n\nhttps://webrsv01.dia-koukyou.jp/sayama/web/ から予約できます', "#定期通知")
 #    mail_list = ['natsukaze2525@gmail.com']
@@ -62,9 +65,21 @@ def sendMail_(text):
 #DRIVER_PATH = '/app/.chromedriver/bin/chromedriver'
 
 #driver = webdriver.Chrome(executable_path="C:\driver\chromedriver.exe",chrome_options=options)
+def month():
+    from datetime import datetime, date, timedelta
+    from dateutil.relativedelta import relativedelta
+    today = datetime.today()
+    return today
+    #print(datetime.strftime(today, '%Y-%m-%d'))
+    #one_month_after = today + relativedelta(months=1)
+    #one_month_ago = today - relativedelta(months=1)
 
+    #print("今月" + datetime.strftime(today, '%m'))
+    #print("来月" + datetime.strftime(one_month_after, '%m'))
+    #print("先月" + datetime.strftime(one_month_ago, '%m'))
 
 def check():
+    today = month()
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu');
@@ -88,35 +103,44 @@ def check():
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
-            text_list.append(d.text+alt)
+            M = datetime.strftime(today, '%m') + '月'
+            text_list.append(M+d.text+alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
-            text_list.append(d.text+alt)
+            one_month_after = today + relativedelta(months=1)
+            M = datetime.strftime(one_month_after, '%m') + '月'
+            text_list.append(M+d.text+alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
-            text_list.append(d.text+alt)
+            two_month_after = today + relativedelta(months=2)
+            M = datetime.strftime(two_month_after, '%m') + '月'
+            text_list.append(M+d.text+alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
-            text_list.append(d.text+alt)
+            three_month_after = today + relativedelta(months=3)
+            M = datetime.strftime(three_month_after, '%m') + '月'
+            text_list.append(M+d.text+alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
-            text_list.append(d.text+alt)
+            four_month_after = today + relativedelta(months=4)
+            M = datetime.strftime(four_month_after, '%m') + '月'
+            text_list.append(M+d.text+alt)
     text = '\n\n'.join(text_list)
     sendMail_(text)
     driver.quit()
