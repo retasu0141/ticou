@@ -86,7 +86,7 @@ def dbcheck(day,text):
         if day in row:
             return row[1]
 
-    cur.execute("insert into db values('{day}','{text}')".format(day=dya,text=text))
+    cur.execute("insert into db values('{day}','{text}')".format(day=day,text=text))
     conn.commit()
     return text
 
@@ -208,6 +208,21 @@ def check():
     for c in class_:
         four_month_after = today + relativedelta(months=4)
         M = datetime.strftime(four_month_after, '%m') + '月'
+        day = c.find_elements_by_tag_name('strong')
+        for d in day:
+            alt = c.find_element_by_tag_name("img").get_attribute("alt")
+            if '空き' in alt:
+                text_ = dbcheck(M+d.text,alt)
+                if alt != text_:
+                    sendMail_(M+d.text)
+                    seve(M+d.text,alt)
+            else:
+                seve(M+d.text,alt)
+    driver.find_element_by_xpath("//*[@alt='次の月']").click()
+    class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
+    for c in class_:
+        five_month_after = today + relativedelta(months=5)
+        M = datetime.strftime(five_month_after, '%m') + '月'
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
