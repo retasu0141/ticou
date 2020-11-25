@@ -53,7 +53,7 @@ def sendMail(text,mail):
     server.close()'''
 
 def sendMail_(text):
-    token = os.environ["token"]
+    token = "xoxb-1520045993846-1512072407575-jYOm7VBluNq1nWimCv9IraG5"
     slack = SlackDriver(token)
     slack.send_message('ただ今の予約状況は以下の通りです\n'+text+'\n\nhttps://webrsv01.dia-koukyou.jp/sayama/web/ から予約できます', "#定期通知")
 #    mail_list = ['natsukaze2525@gmail.com']
@@ -140,6 +140,15 @@ def check():
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
             four_month_after = today + relativedelta(months=4)
             M = datetime.strftime(four_month_after, '%m') + '月'
+            text_list.append(M+d.text+alt)
+    driver.find_element_by_xpath("//*[@alt='次の月']").click()
+    class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
+    for c in class_:
+        day = c.find_elements_by_tag_name('strong')
+        for d in day:
+            alt = c.find_element_by_tag_name("img").get_attribute("alt")
+            five_month_after = today + relativedelta(months=5)
+            M = datetime.strftime(five_month_after, '%m') + '月'
             text_list.append(M+d.text+alt)
     text = '\n\n'.join(text_list)
     sendMail_(text)
