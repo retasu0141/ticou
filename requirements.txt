@@ -6,4 +6,4 @@ hamlish_jinja
 werkzeug==0.16.1
 flask-sqlalchemy
 requests
-dateutil
+python-dateutil
