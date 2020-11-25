@@ -1,5 +1,4 @@
 from selenium import webdriver
-
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
@@ -8,9 +7,8 @@ from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-#import chromedriver_binary
+import chromedriver_binary
 import time
-from selenium.webdriver.chrome.options import Options
 
 import smtplib
 from email.mime.text import MIMEText
@@ -51,7 +49,6 @@ def sendMail_(text):
 
 
 def check():
-    profile = webdriver.FirefoxProfile()
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu');
@@ -59,7 +56,6 @@ def check():
     options.add_argument('--proxy-server="direct://"');
     options.add_argument('--proxy-bypass-list=*');
     options.add_argument('--start-maximized');
-    #driver = webdriver.Chrome(executable_path='/app/.apt/usr/bin/google-chrome',options=options)
     driver = webdriver.Chrome(options=options)
     url = 'https://webrsv01.dia-koukyou.jp/sayama/web/'
     driver.get(url)
@@ -72,6 +68,27 @@ def check():
     driver.find_element_by_link_text(u"智光山公園キャンプ場").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     text_list = []
+    for c in class_:
+        day = c.find_elements_by_tag_name('strong')
+        for d in day:
+            alt = c.find_element_by_tag_name("img").get_attribute("alt")
+            text_list.append(d.text+alt)
+    driver.find_element_by_xpath("//*[@alt='次の月']").click()
+    class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
+    for c in class_:
+        day = c.find_elements_by_tag_name('strong')
+        for d in day:
+            alt = c.find_element_by_tag_name("img").get_attribute("alt")
+            text_list.append(d.text+alt)
+    driver.find_element_by_xpath("//*[@alt='次の月']").click()
+    class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
+    for c in class_:
+        day = c.find_elements_by_tag_name('strong')
+        for d in day:
+            alt = c.find_element_by_tag_name("img").get_attribute("alt")
+            text_list.append(d.text+alt)
+    driver.find_element_by_xpath("//*[@alt='次の月']").click()
+    class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
         day = c.find_elements_by_tag_name('strong')
         for d in day:
