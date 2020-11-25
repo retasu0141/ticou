@@ -8,7 +8,7 @@ from selenium.webdriver.common.alert import Alert
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-#import chromedriver_binary
+import chromedriver_binary
 import time
 
 import smtplib
@@ -53,7 +53,7 @@ def sendMail(text,mail):
     server.close()'''
 
 def sendMail_(text):
-    token = "xoxb-1520045993846-1512072407575-jYOm7VBluNq1nWimCv9IraG5"
+    token = os.environ["token"]
     slack = SlackDriver(token)
     slack.send_message('ただ今の予約状況は以下の通りです\n'+text+'\n\nhttps://webrsv01.dia-koukyou.jp/sayama/web/ から予約できます', "#定期通知")
 #    mail_list = ['natsukaze2525@gmail.com']
