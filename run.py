@@ -17,6 +17,8 @@ from email.utils import formatdate
 import ssl,os
 
 import psycopg2
+from datetime import datetime, date, timedelta
+from dateutil.relativedelta import relativedelta
 
 class SlackDriver:
 
@@ -109,7 +111,21 @@ def seve(day,text):
         print (str(e))
         return
 
+def month():
+    from datetime import datetime, date, timedelta
+    from dateutil.relativedelta import relativedelta
+    today = datetime.today()
+    return today
+    #print(datetime.strftime(today, '%Y-%m-%d'))
+    #one_month_after = today + relativedelta(months=1)
+    #one_month_ago = today - relativedelta(months=1)
+
+    #print("今月" + datetime.strftime(today, '%m'))
+    #print("来月" + datetime.strftime(one_month_after, '%m'))
+    #print("先月" + datetime.strftime(one_month_ago, '%m'))
+
 def check():
+    today = month()
     options = Options()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu');
@@ -130,69 +146,78 @@ def check():
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     text_list = []
     for c in class_:
+        M = datetime.strftime(today, '%m') + '月'
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
             if '空き' in alt:
-                text_ = dbcheck(d.text,alt)
+                text_ = dbcheck(M+d.text,alt)
                 if alt != text_:
-                    sendMail_(d.text)
-                    seve(d.text,alt)
+                    sendMail_(M+d.text)
+                    seve(M+d.text,alt)
             else:
-                seve(d.text,alt)
+                seve(M+d.text,alt)
             #text_list.append(d.text+alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
+        one_month_after = today + relativedelta(months=1)
+        M = datetime.strftime(one_month_after, '%m') + '月'
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
             if '空き' in alt:
-                text_ = dbcheck(d.text,alt)
+                text_ = dbcheck(M+d.text,alt)
                 if alt != text_:
-                    sendMail_(d.text)
-                    seve(d.text,alt)
+                    sendMail_(M+d.text)
+                    seve(M+d.text,alt)
             else:
-                seve(d.text,alt)
+                seve(M+d.text,alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
+        two_month_after = today + relativedelta(months=2)
+        M = datetime.strftime(two_month_after, '%m') + '月'
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
             if '空き' in alt:
-                text_ = dbcheck(d.text,alt)
+                text_ = dbcheck(M+d.text,alt)
                 if alt != text_:
-                    sendMail_(d.text)
-                    seve(d.text,alt)
+                    sendMail_(M+d.text)
+                    seve(M+d.text,alt)
             else:
-                seve(d.text,alt)
+                seve(M+d.text,alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
+        three_month_after = today + relativedelta(months=3)
+        M = datetime.strftime(three_month_after, '%m') + '月'
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
             if '空き' in alt:
-                text_ = dbcheck(d.text,alt)
+                text_ = dbcheck(M+d.text,alt)
                 if alt != text_:
-                    sendMail_(d.text)
-                    seve(d.text,alt)
+                    sendMail_(M+d.text)
+                    seve(M+d.text,alt)
             else:
-                seve(d.text,alt)
+                seve(M+d.text,alt)
     driver.find_element_by_xpath("//*[@alt='次の月']").click()
     class_ = driver.find_elements_by_class_name('m_akitablelist_sat')
     for c in class_:
+        four_month_after = today + relativedelta(months=4)
+        M = datetime.strftime(four_month_after, '%m') + '月'
         day = c.find_elements_by_tag_name('strong')
         for d in day:
             alt = c.find_element_by_tag_name("img").get_attribute("alt")
             if '空き' in alt:
-                text_ = dbcheck(d.text,alt)
+                text_ = dbcheck(M+d.text,alt)
                 if alt != text_:
-                    sendMail_(d.text)
-                    seve(d.text,alt)
+                    sendMail_(M+d.text)
+                    seve(M+d.text,alt)
             else:
-                seve(d.text,alt)
+                seve(M+d.text,alt)
     driver.quit()
 
 if __name__ == "__main__":
