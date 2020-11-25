@@ -1,3 +1,4 @@
+import requests
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.select import Select
@@ -18,7 +19,19 @@ import ssl
 
 # Seleniumをあらゆる環境で起動させるChromeオプション
 
+class SlackDriver:
 
+    def __init__(self, _token):
+        self._token = _token  # api_token
+        self._headers = {'Content-Type': 'application/json'}
+
+    def send_message(self, message, channel):
+        params = {"token": self._token, "channel": channel, "text": message}
+
+        r = requests.post('https://slack.com/api/chat.postMessage',
+                          headers=self._headers,
+                          params=params)
+        print("return ", r.json())
 '''
 def sendMail(text,mail):
     account = "retasubot.sendonly@gmail.com"
