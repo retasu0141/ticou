@@ -19,7 +19,7 @@ import ssl
 # Seleniumをあらゆる環境で起動させるChromeオプション
 
 
-
+'''
 def sendMail(text,mail):
     account = "retasubot.sendonly@gmail.com"
     password = "djtralajkkyuzgpa"
@@ -34,12 +34,15 @@ def sendMail(text,mail):
     server.starttls()
     server.login(account, password)
     server.sendmail(account, mail, msg.as_string())
-    server.close()
+    server.close()'''
 
 def sendMail_(text):
-    mail_list = ['natsukaze2525@gmail.com']
-    for m in mail_list:
-        sendMail(text,m)
+    token = "xoxb-1520045993846-1512072407575-3BZJCWoSxoZHBuvjWWCwM3nZ"
+    slack = SlackDriver(token)
+    slack.send_message('ただ今の予約状況は以下の通りです\n'+text+'\n\nhttps://webrsv01.dia-koukyou.jp/sayama/web/ から予約できます', "#定期通知")
+#    mail_list = ['natsukaze2525@gmail.com']
+#    for m in mail_list:
+#        sendMail(text,m)
 # options.add_argument('--headless'); # ※ヘッドレスモードを使用する場合、コメントアウトを外す
 
 #DRIVER_PATH = '/chromedriver'
